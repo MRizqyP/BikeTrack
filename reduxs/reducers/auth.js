@@ -20,8 +20,8 @@ export default function authReducer(state = initialState, action = {}) {
     case types.AUTH_LOGOUT:
       return {
         ...state,
-        roleName: null,
-        userId: null,
+        roleName: "Guest",
+        userId: "123123",
         isError: null,
         isLoggedin: false,
       };

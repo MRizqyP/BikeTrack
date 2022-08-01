@@ -12,11 +12,14 @@ import {
 import { icons, images, SIZES, COLORS, FONTS } from "../constants";
 import Geolocation from "react-native-geolocation-service";
 // Redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import Button from "../components/Button";
+import { AUTH_LOGOUT } from "../reduxs/actions/action-types";
+// import { AUTH_LOGOUT } from "../reduxs/actions/action-auth";
 
 const Home = ({ navigation }) => {
   // Dummy Datas
-
+  const dispatch = useDispatch();
   const { roleName } = useSelector(({ auth: { roleName } }) => ({
     roleName,
   }));
@@ -53,17 +56,17 @@ const Home = ({ navigation }) => {
   const categoryData = [
     {
       id: 1,
-      name: "Event",
+      name: "Create Event",
       icon: icons.calendar,
     },
     {
       id: 2,
-      name: "Community",
+      name: "Create Community",
       icon: icons.bicycle,
     },
     {
       id: 3,
-      name: "Bengkel",
+      name: "Create Bengkel",
       icon: icons.tools,
     },
   ];
@@ -235,23 +238,6 @@ const Home = ({ navigation }) => {
   function renderHeader() {
     return (
       <View style={{ flexDirection: "row", height: 50 }}>
-        {/* <TouchableOpacity
-          style={{
-            width: 50,
-            paddingLeft: SIZES.padding * 2,
-            justifyContent: 'center'
-          }}
-        >
-          <Image
-            source={icons.nearby}
-            resizeMode="contain"
-            style={{
-              width: 30,
-              height: 30
-            }}
-          />
-        </TouchableOpacity> */}
-
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
@@ -268,23 +254,6 @@ const Home = ({ navigation }) => {
             <Text style={{ ...FONTS.h3 }}>{currentLocation.streetName}</Text>
           </View>
         </View>
-
-        {/* <TouchableOpacity
-          style={{
-            width: 50,
-            paddingRight: SIZES.padding * 2,
-            justifyContent: 'center'
-          }}
-        >
-          <Image
-            source={icons.basket}
-            resizeMode="contain"
-            style={{
-              width: 30,
-              height: 30
-            }}
-          />
-        </TouchableOpacity> */}
       </View>
     );
   }
@@ -345,7 +314,7 @@ const Home = ({ navigation }) => {
 
     return (
       <View style={{ padding: SIZES.padding * 2 }}>
-        <Text style={{ ...FONTS.h1 }}>Main</Text>
+        <Text style={{ ...FONTS.h1 }}>Create</Text>
         <Text style={{ ...FONTS.h1 }}>Categories</Text>
 
         <FlatList
@@ -481,7 +450,24 @@ const Home = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       {renderHeader()}
       {renderMainCategories()}
-      {renderRestaurantList()}
+
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: 20,
+        }}
+      >
+        <Button
+          text={"Keluar"}
+          onPress={() => {
+            dispatch({ type: AUTH_LOGOUT });
+            // navigation.navigate('LoginScreen')
+          }}
+          backgroundColor={"red"}
+        />
+      </View>
+      {/* {renderRestaurantList()} */}
     </SafeAreaView>
   );
 };
